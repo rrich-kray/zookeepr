@@ -44,5 +44,6 @@ app.get('/api/animals', (req, res) => {
     res.json(results)
 })
 
-app.listen(3001, () => {heroku 
+app.listen(3001, () => {
+    console.log(`API server now on port ${PORT}!`) 
 })

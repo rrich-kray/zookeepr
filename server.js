@@ -36,6 +36,12 @@ const filterByQuery = (query, animalsArray) => {
     return filteredResults
 }
 
+const findById = (id, animalsArray) => {
+    const result = animalsArray.filter(animal => animal.id === id)[0];
+    if (result) res.json(result);
+    else res.send(404)
+}
+
 app.get('/api/animals', (req, res) => {
     let results = animals;
     if (req.query) {
@@ -43,6 +49,11 @@ app.get('/api/animals', (req, res) => {
     }
     res.json(results)
 })
+
+app.get('/api/animals/:id', (req, res) => { // a param route must come AFTER the other GET route
+    const result = findById(req.params.id, animals); // We can't use the filterByQuery function because that is designed to return more than one result, whereas this function will only return a single animal
+    res.json(result)
+}) // generally, req.query combines multiple parameters, whereas req.param is specific to a single property
 
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`) 

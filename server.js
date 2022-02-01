@@ -10,6 +10,7 @@ app.use(express.urlencoded({ extended: true })) // This is a method built into E
 // parse incoming JSON data
 app.use(express.json()) // app.use() mount functions to our server through which requests will pass before reaching their endpoint. These functions are known as middleware. 
 // Takes incoming post data in the form of JSON and parses it into the req.body javascript object. 
+app.use(express.static('public')) // Function that allows the user to specify a root folder from which the server will serve static assets. This instructs the server to make files in the 'public' path static resources. This means that all of our front-end code can now be accessed without having a specific server endpoint created for it!
 const { animals } = require('./data/animals.json')
 
 // app.get('/api/animals', (req, res) => { // first parameter is a string that describes the route that the client will fetch from. Second is a callback function that will be executed every time the route is accessed.
@@ -92,10 +93,17 @@ app.post('/api/animals', (req, res) => { // route that listens for POST requests
     }
 })  
 
+app.get('/', (req, res) => { // '/' is the root of the server and where we will create our homepage for the server. his GET route has just one job to do, and that is to respond with an HTML page to display in the browser.
+    res.sendFile(path.join(__dirname, './public/index.html')) // We use the path module to ensure that this would work in any environment
+})
+
 // Accepting data from a client can be risky. While we expect to receive the type of data we asked for, there is nothing stopping a user from sending incorrect or malicious data to our server. For this reason, there are validation libraries that ensure (on the server side) that the data meets certain criteria.
 app.listen(PORT, () => { // this can be placed before or after the GET functions
     console.log(`API server now on port ${PORT}!`)
-})
+}) // app.listen() should always be last
+
+//   any time we make a request to the server, it looks at every single route we've explicitly created. If it doesn't find a matching route name, it will think that there's something wrong and won't provide a response.
+
 
 // can do Heroku create in terminal, so that you'd have separate remote for Heroku
 // can connect git to heroku. Can 

@@ -97,12 +97,25 @@ app.get('/', (req, res) => { // '/' is the root of the server and where we will 
     res.sendFile(path.join(__dirname, './public/index.html')) // We use the path module to ensure that this would work in any environment
 })
 
+app.get('/animals', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/animals.html'))
+})
+
+app.get('/zookeepers', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/zookeepers.html'))
+})
+
+app.get('*', (req, res) => {
+    res.sendFile(path.join(__dirname, './public/index.html')) // The * will act as a wildcard, meaning any route that wasn't previously defined will fall under this request and will receive the homepage as the response. Thus, requests for /about or /contact or /membership will essentially be the same now.
+}) // this should always come last, otherwise itr will taqke precendence over your other routes
+
 // Accepting data from a client can be risky. While we expect to receive the type of data we asked for, there is nothing stopping a user from sending incorrect or malicious data to our server. For this reason, there are validation libraries that ensure (on the server side) that the data meets certain criteria.
 app.listen(PORT, () => { // this can be placed before or after the GET functions
     console.log(`API server now on port ${PORT}!`)
 }) // app.listen() should always be last
 
-//   any time we make a request to the server, it looks at every single route we've explicitly created. If it doesn't find a matching route name, it will think that there's something wrong and won't provide a response.
+// any time we make a request to the server, it looks at every single route we've explicitly created. If it doesn't find a matching route name, it will think that there's something wrong and won't provide a response.
+// When you want to see a page, you go to the server's route that displays it.
 
 
 // can do Heroku create in terminal, so that you'd have separate remote for Heroku

@@ -1,6 +1,5 @@
 const fs = require('fs')
 const path = require('path')
-
 const express = require('express')
 const PORT = process.env.PORT || 3001
 const app = express();
@@ -29,9 +28,8 @@ const filterByQuery = (query, animalsArray) => {
         } else {   
             personalityTraitsArray = query.personalityTraits;
         }
-
         personalityTraitsArray.forEach(trait => {
-            filteredResults = filteredResults.filter(animal => animal.perconalityTraits.indexOf(trait) !== -1)
+            filteredResults = filteredResults.filter(animal => animal.personalityTraits.indexOf(trait) !== -1)
         })
     }
     if (query.diet) {
@@ -48,8 +46,7 @@ const filterByQuery = (query, animalsArray) => {
 
 const findById = (id, animalsArray) => {
     const result = animalsArray.filter(animal => animal.id === id)[0];
-    if (result) res.json(result);
-    else res.send(404)
+    return result
 }
 
 const createNewAnimal = (body, animalsArray) => { // body is POST routes req.body, animalsArray is the array we will add the data to
@@ -116,6 +113,7 @@ app.listen(PORT, () => { // this can be placed before or after the GET functions
 
 // any time we make a request to the server, it looks at every single route we've explicitly created. If it doesn't find a matching route name, it will think that there's something wrong and won't provide a response.
 // When you want to see a page, you go to the server's route that displays it.
+// Over the last three lessons, you touched on almost everything that a typical web server does in modern web development. As you grow as a developer, you'll find that building a server is actually just a lot of repetition where the only thing that really changes is the specific data you're interacting with.
 
 
 // can do Heroku create in terminal, so that you'd have separate remote for Heroku

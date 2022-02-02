@@ -1,9 +1,11 @@
 {
   "dependencies": {
-    "express": "^4.17.2"
+    "express": "^4.17.2",
+    "jest": "^27.4.7"
   },
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "test": "jest"
   },
   "name": "zookeepr",
   "description": "",

@@ -48,4 +48,38 @@ const handleAnimalFormSubmit = event => {
 
 };
 
+const handleZookeeperFormSubmit = event => {
+  event.preventDefault();
+
+  // get animal data and organize it
+  const name = $zookeeperForm.querySelector('[name="zookeeper-name"]').value;
+  const age = $zookeeperForm.querySelector('[name="age"]').value;
+  const favoriteAnimal = $zookeeperForm.querySelectorAll('[name="favorite-animal"]');
+  const zookeeperObject = { name, age, favoriteAnimal };
+  
+  console.log(zookeeperObject)
+
+  fetch('/api/zookeepers', { // because the request is coming from the server, we don't have to use the full url
+    method: 'POST', // this instructs the fetch request to connect to the proper encdpoint on the server, which is the one we created in the previous lesson
+    headers: {
+      Accept: 'application/json', // informs the request that this is going to be JSON data
+      'Content-type': 'application/json'
+    },
+    body: JSON.stringify(zookeeperObject)
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json()
+      }
+      alert('Error: ' + response.statusText);
+  })
+  .then(postResponse => {
+    console.log(postResponse);
+    alert('Thank you for adding an zookeeper!')
+  })
+
+};
+
+$zookeeperForm.addEventListener('submit', handleZookeeperFormSubmit)
+
 $animalForm.addEventListener('submit', handleAnimalFormSubmit);
